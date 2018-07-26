@@ -116,7 +116,15 @@ function reload() {
             console.info(data);
 
             $('#indego_mower_state').html(codes[data.state]);
+            data.mowed = 57;
             $('#indego_mower_mowed').html(data.mowed + " %");
+            $('#indego_mower_mowed_chart').html(data.mowed + " %");
+
+            //$('#indego_mower_chart_mowed').find('svg')[2].setAttribute('stroke-dasharray', data.mowed + " " + 100 - data.mowed);
+
+            //resizeSvg($('#indego_mower_chart_mowed').find('svg')[0], 100);
+            $('#indego_mower_chart_mowed').find('circle')[2].setAttribute('stroke-dasharray', data.mowed + ' ' + (100 - data.mowed));
+
             $('#indego_mower_mowmode').html(data.mowmode);
             $('#indego_mower_runtimeTotal').html(JSON.stringify(data.runtime.total));
             $('#indego_mower_runtimeSession').html(JSON.stringify(data.runtime.session));
@@ -125,7 +133,13 @@ function reload() {
     }
 
 
-    function resizeMap(svg) {
+    /**
+     * Resizing a given svg
+     *
+     * @param svg
+     * @param size
+     */
+    function resizeSvg(svg, size) {
 
         if (svg == "undefined") return;
 
@@ -135,13 +149,12 @@ function reload() {
 
         var pw;
         var ph;
-        var mapsize = 100;
 
         if (w > h){
-            pw = mapsize;
+            pw = size;
             ph = pw * h/w;
         } else {
-            ph = mapsize;
+            ph = size;
             pw = ph * w/h;
         }
         svg.setAttribute('width', pw);
@@ -169,16 +182,12 @@ function reload() {
 
 
         }).done(function(map) {
-            console.info(map);
 
-            //map.setAttribute('viewBox', '0 0 ' + 100 + ' ' + 100);
             $('#indego_mower_map').append(map);
 
             var svg = $("#indego_mower_map").find('svg')[0];
 
-            resizeMap(svg);
-
-            //saveMap(map);
+            resizeSvg(svg, 100);
         });
     }
 
