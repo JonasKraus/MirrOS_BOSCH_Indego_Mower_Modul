@@ -29,4 +29,11 @@
     </tbody>
 
 </table>
-<img id="indego_mower_map" src="/modules/Indego_Mower/assets/map.svg"/>
+
+<div id="indego_mower_map"></div>
+
+
+
+<p id="indego_mower_headline_table_alerts"><?php echo _('Alerts:') ?></p>
+<table id="indego_mower_table_alerts">
+</table>

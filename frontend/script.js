@@ -87,11 +87,12 @@ function reload() {
 
             requestState(data);
             requestMap(data);
+            requestAlerts(data);
 
             window.setTimeout(function() {
 
                 deauthenticate(data);
-            }, 3000); // Deauthenticate after some time
+            }, 9000); // Deauthenticate after some time
         });
     }
 
@@ -124,8 +125,33 @@ function reload() {
     }
 
 
+    function resizeMap(svg) {
+
+        if (svg == "undefined") return;
+
+        var box = svg.viewBox.baseVal;
+        var w = Math.round(box.width);
+        var h = Math.round(box.height);
+
+        var pw;
+        var ph;
+        var mapsize = 100;
+
+        if (w > h){
+            pw = mapsize;
+            ph = pw * h/w;
+        } else {
+            ph = mapsize;
+            pw = ph * w/h;
+        }
+        svg.setAttribute('width', pw);
+        svg.setAttribute('height', ph);
+        svg.setAttribute('viewBox', '0 0 '+w+' '+h);
+    }
+
     /**
      * Requests the map as svg
+     * An image with content type "image/svg+xml; charset=utf-8"
      *
      * @param credentials
      */
@@ -137,12 +163,82 @@ function reload() {
             headers: {
                 "x-im-context-id":credentials.contextId
             },
-            contentType: "application/json;charset=UTF-8",
+            //contentType: "application/svg+xml; charset=utf-8",
+            dataType: "text",
+
+
 
         }).done(function(map) {
             console.info(map);
 
-            saveMap(map);
+            //map.setAttribute('viewBox', '0 0 ' + 100 + ' ' + 100);
+            $('#indego_mower_map').append(map);
+
+            var svg = $("#indego_mower_map").find('svg')[0];
+
+            resizeMap(svg);
+
+            //saveMap(map);
+        });
+    }
+
+
+    /**
+     * Creating a table for displaying the alerts
+     *
+     * @param alerts
+     */
+    function createAlertsView(alerts) {
+
+        // alerts = createTestAlerts();
+
+        if (alerts.length == 0) {
+
+            $('#indego_mower_headline_table_alerts').hide();
+        }
+
+        // Removing old rows from table
+        $('tr.indego_mower_tr').remove();
+
+        for(var i = 0; i <= alerts.length; i++) {
+
+            // the current table row where data gets added
+            var trHeadline = $('<tr class="indego_mower_tr"/>').hide();
+            var trMessage = $('<tr class="indego_mower_tr"/>').hide();
+
+            if (alerts[i] !== undefined) {
+
+                trHeadline.append("<td>" + alerts[i].headline + "</td>");
+                trMessage.append("<td>" + alerts[i].message + "</td>");
+            }
+
+            // Appending the row to the table
+            $('#indego_mower_table_alerts').append(trHeadline).append(trMessage);
+
+            $(trHeadline).show('slow');
+            $(trMessage).show('slow');
+        }
+
+    }
+
+    /**
+     * Requests the map as svg
+     *
+     * @param credentials
+     */
+    function requestAlerts(credentials) {
+
+        $.ajax({
+            type: 'GET',
+            url: url + "alerts",
+            headers: {
+                "x-im-context-id":credentials.contextId
+            },
+            contentType: "application/json;charset=UTF-8",
+
+        }).done(function(alerts) {
+
+            createAlertsView(alerts);
         });
     }
 
@@ -226,5 +322,35 @@ function createStatusCodes() {
         1281: "Software update",
         1537: "Stuck on lawn, help needed"
     }
+}
+
+
+/**
+ * For testing only
+ *
+ * @returns {*[]}
+ */
+function createTestAlerts() {
+
+    return [
+        {
+            alm_sn: "1234567890",
+            alert_id: "12345678-abef-12de-3322-11aa22ee2387",
+            headline: "Wartungshinweis.",
+            date: "2016-05-14T16:29:31.123Z",
+            message: "Messer prüfen. Ihr Indego hat 100 Stunden gemäht. Prüfen Sie bitte die Messer auf einwandfreien Zustand, damit weiterhin die optimale Leistung gewährleistet ist. ",
+            read_status: "unread",
+            flag: "warning"
+        },
+        {
+            alm_sn: "1234567890",
+            alert_id: "12345678-abef-12de-3322-11aa22ee2387",
+            headline: "Mäher benötigt Hilfe.",
+            date: "2016-05-14T14:10:23.112Z",
+            message: "Begrenzungsdrahtsignal über längere Zeit nicht erkannt. Ihr Indego hat für einige Zeit das Begrenzungsdrahtsignal nicht erkannt. Bitte prüfen Sie die Anschlüsse der Ladestation und des Begrenzungsdrahts.",
+            read_status: "unread",
+            flag: "warning"
+        }
+    ];
 }
 

@@ -3,6 +3,7 @@ td.indego_mower_text_align_right {
     border: 1px solid red;
 }
 
-.intro {
-    background-color: yellow;
+#indego_mower_map {
+    -webkit-filter: invert(1);
+    filter: invert(1);
 }
