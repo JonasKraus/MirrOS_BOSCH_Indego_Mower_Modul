@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-21 21:36+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: template.php:3
+msgid "newscast_title"
+msgstr "News Cast"
+
+#: template.php:4
+msgid "newscast_description"
+msgstr "Muestra mensajes en tu espejo y lee los artículos escaneando los códigos QR o con la aplicación Android MirrOS News Cast."
+
+#: template.php:5
+msgid "top"
+msgstr "top"
+
+#: template.php:6
+msgid "latest"
+msgstr "actual"
+
+#: template.php:7
+msgid "popular"
+msgstr "popular"
+
+#: template.php:51
+msgid ""
+"Insert your ApiKey:<br>(To generate an ApiKey register <a href=\"https://"
+"newsapi.org/register\" target=\"_blank\">here</a>)"
+msgstr "Introduce tu ApiKey:<br>(Para crearla regístrate <a href=\"https://newsapi.org/register\" target=\"_blank\">aquí</a>)"
+
+#: template.php:54
+msgid "Show sources"
+msgstr "Mostrar fuentes de noticias"
+
+#: template.php:63
+msgid "Show images"
+msgstr "Mostrar fotos"
+
+#: template.php:71
+msgid "Show Qr-Codes"
+msgstr "Mostrar códigos Qr"
+
+#: template.php:79
+msgid "Origin of the news"
+msgstr "Origen de los artículos"
+
+#: template.php:92
+msgid "Sorting of the articles."
+msgstr "Ordenar los artículos"
+
+#: template.php:105
+msgid "Set the number of displayed articles."
+msgstr "Número de artículos mostrados a la vez."
+
+#: template.php:115
+msgid "Set how many seconds the articles will be displayed."
+msgstr "Número de segundos hasta que se renueven los artículos."
+
+#: template.php:137
+msgid "Powered by newsapi.org"
+msgstr ""
+
+#: template.php:141
+msgid "save"
+msgstr "Guardar"

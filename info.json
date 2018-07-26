@@ -1,0 +1,17 @@
+{
+  "module": {
+    "name": "Indego Mower",
+    "version": "1.0.0",
+    "description": "Lasse den aktuellen Zustand deines Mähroboters anzeigen",
+    "module_url": "https://glancr.de/module/...", // TODO
+    "download_url": "https://api.glancr.de/update/moduleZips/..", // TODO
+    "category": "Misc",
+    "last_update": "YYYY-MM-DD"
+  },
+  "creator": {
+    "name": "Jonas Kraus",
+    "contact": "",
+    "website": "",
+    "profile": ""
+  }
+}

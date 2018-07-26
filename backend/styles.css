@@ -1,0 +1,24 @@
+#text_field__edit--button {
+    cursor: pointer;
+}
+
+fieldset > label {
+    float: left;
+    width: 75%;
+}
+
+fieldset input,
+fieldset select,
+input[type='number'] {
+    display: inline-block;
+    width: 25%;
+    vertical-align: top;
+}
+
+/*#current_fontsize_val {*/
+    /*width: 5%;*/
+/*}*/
+
+#text_field_content {
+    width: 100%;
+}
