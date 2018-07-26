@@ -1,9 +1,12 @@
 td.indego_mower_text_align_right {
     text-align: right;
-    border: 1px solid red;
 }
 
 #indego_mower_map {
+
+    float: left;
+    /*
     -webkit-filter: invert(1);
     filter: invert(1);
+    */
 }
