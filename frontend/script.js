@@ -113,16 +113,13 @@ function reload() {
             contentType: "application/json;charset=UTF-8",
 
         }).done(function(data) {
-            console.info(data);
+
+            data.mowed = 57; // TODO
 
             $('#indego_mower_state').html(codes[data.state]);
-            data.mowed = 57;
             $('#indego_mower_mowed').html(data.mowed + " %");
             $('#indego_mower_mowed_chart').html(data.mowed + " %");
 
-            //$('#indego_mower_chart_mowed').find('svg')[2].setAttribute('stroke-dasharray', data.mowed + " " + 100 - data.mowed);
-
-            //resizeSvg($('#indego_mower_chart_mowed').find('svg')[0], 100);
             $('#indego_mower_chart_mowed').find('circle')[2].setAttribute('stroke-dasharray', data.mowed + ' ' + (100 - data.mowed));
 
             $('#indego_mower_mowmode').html(data.mowmode);
@@ -130,6 +127,50 @@ function reload() {
             $('#indego_mower_runtimeSession').html(JSON.stringify(data.runtime.session));
             $('#indego_mower_mapUpdate').html(data.map_update_available);
         });
+    }
+
+
+    /**
+     * Requests the map as svg
+     * An image with content type "image/svg+xml; charset=utf-8"
+     *
+     * @param credentials
+     */
+    function requestMap(credentials) {
+
+        $.ajax({
+            type: 'GET',
+            url: url + "alms/" + credentials.alm_sn + "/map",
+            headers: {
+                "x-im-context-id":credentials.contextId
+            },
+            //contentType: "application/svg+xml; charset=utf-8",
+            dataType: "text",
+
+
+
+        }).done(function(map) {
+
+            $('#indego_mower_map').append(map);
+
+            var svg = $("#indego_mower_map").find('svg')[0];
+
+
+            styleMap();
+            resizeSvg(svg, 150);
+
+        });
+    }
+
+
+    /**
+     * Edit style of map to match to the views theme
+     */
+    function styleMap() {
+
+        $("#indego_mower_map").find('rect')[0].remove(); // Background
+        $("#indego_mower_map").find('path')[0].remove(); // mash
+        $("#indego_mower_map").find('polygon')[1].remove();
     }
 
 
@@ -157,38 +198,9 @@ function reload() {
             ph = size;
             pw = ph * w/h;
         }
-        svg.setAttribute('width', pw);
-        svg.setAttribute('height', ph);
+        svg.setAttribute('width', ph);
+        svg.setAttribute('height', pw);
         svg.setAttribute('viewBox', '0 0 '+w+' '+h);
-    }
-
-    /**
-     * Requests the map as svg
-     * An image with content type "image/svg+xml; charset=utf-8"
-     *
-     * @param credentials
-     */
-    function requestMap(credentials) {
-
-        $.ajax({
-            type: 'GET',
-            url: url + "alms/" + credentials.alm_sn + "/map",
-            headers: {
-                "x-im-context-id":credentials.contextId
-            },
-            //contentType: "application/svg+xml; charset=utf-8",
-            dataType: "text",
-
-
-
-        }).done(function(map) {
-
-            $('#indego_mower_map').append(map);
-
-            var svg = $("#indego_mower_map").find('svg')[0];
-
-            resizeSvg(svg, 100);
-        });
     }
 
 
@@ -199,17 +211,14 @@ function reload() {
      */
     function createAlertsView(alerts) {
 
-        // alerts = createTestAlerts();
-
-        if (alerts.length == 0) {
-
-            $('#indego_mower_headline_table_alerts').hide();
-        }
+        alerts = createTestAlerts(); // TODO
 
         // Removing old rows from table
         $('tr.indego_mower_tr').remove();
 
-        for(var i = 0; i <= alerts.length; i++) {
+        var numOfDisplayedAlerts = 1; // TODO
+
+        for(var i = 0; i < numOfDisplayedAlerts; i++) {
 
             // the current table row where data gets added
             var trHeadline = $('<tr class="indego_mower_tr"/>').hide();
@@ -217,8 +226,9 @@ function reload() {
 
             if (alerts[i] !== undefined) {
 
+                trHeadline.append("<td width='24'><img src='/modules/Indego_Mower/assets/alert.svg'/></td>");
                 trHeadline.append("<td>" + alerts[i].headline + "</td>");
-                trMessage.append("<td>" + alerts[i].message + "</td>");
+                trMessage.append("<td colspan='2'>" + alerts[i].message + "</td>");
             }
 
             // Appending the row to the table

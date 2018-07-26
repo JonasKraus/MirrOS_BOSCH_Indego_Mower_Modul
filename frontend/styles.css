@@ -4,11 +4,18 @@ td.indego_mower_text_align_right {
 
 #indego_mower_map {
 
-    float: left;
     /*
     -webkit-filter: invert(1);
     filter: invert(1);
     */
+}
+
+figure {
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 10px;
 }
 
 .float_left {
