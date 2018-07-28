@@ -114,9 +114,7 @@ function reload() {
 
         }).done(function(data) {
 
-            //data.mowed = 57; // TODO
-
-            $('#indego_mower_state').html(codes[data.state]);
+            $('#indego_mower_state').html('<?php echo _("' + codes[data.state] + '"); ?>');
             $('#indego_mower_mowed_chart').html(data.mowed + " %");
 
             $('#indego_mower_chart_mowed').find('circle')[2].setAttribute('stroke-dasharray', data.mowed + ' ' + (100 - data.mowed));
@@ -378,8 +376,8 @@ function createStatusCodes() {
         1281: "Software update",
         1537: "Stuck on lawn, help needed"
     }
-}
 
+}
 
 /**
  * For testing only
