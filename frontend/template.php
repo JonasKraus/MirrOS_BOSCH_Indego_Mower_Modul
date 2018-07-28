@@ -25,32 +25,32 @@
     <figure class="float_left">
         <figcaption class="fig-caption"><?php echo _('Runtime total') ?></figcaption>
         <div id="indego_mower_chart_runtime_total">
-            <svg class="chart" width="200" height="100">
+            <svg class="chart" width="160" height="100">
                 <g class="bar">
                     <rect width="100" height="20"></rect>
                     <text class="bar-chart-label" x="105" y="11" dy="3"><?php echo _('operate') ?></text>
-                    <text class="bar-chart-label" x="0" y="30" dy="4"><?php echo _('DD HH MM') ?></text>
+                    <text id="indego_mower_runtime_total_operate" class="bar-chart-label" x="0" y="30" dy="4"><?php echo _('DD HH MM') ?></text>
                 </g>
                 <g class="bar">
                     <rect width="80" height="20" y="49"></rect>
                     <text class="bar-chart-label" x="85" y="60" dy="3"><?php echo _('charge') ?></text>
-                    <text class="bar-chart-label" x="0" y="79" dy="4"><?php echo _('DD HH MM') ?></text>
+                    <text id="indego_mower_runtime_total_charge" class="bar-chart-label" x="0" y="79" dy="4"><?php echo _('DD HH MM') ?></text>
                 </g>
         </div>
     </figure>
     <figure class="float_left">
         <figcaption class="fig-caption"><?php echo _('Runtime session') ?></figcaption>
         <div id="indego_mower_chart_runtime_session">
-            <svg class="chart" width="200" height="100">
+            <svg class="chart" width="160" height="100">
                 <g class="bar">
                     <rect width="100" height="20"></rect>
                     <text class="bar-chart-label" x="105" y="11" dy="3"><?php echo _('operate') ?></text>
-                    <text class="bar-chart-label" x="0" y="30" dy="4"><?php echo _('DD HH MM') ?></text>
+                    <text id="indego_mower_runtime_session_operate" class="bar-chart-label" x="0" y="30" dy="4"><?php echo _('DD HH MM') ?></text>
                 </g>
                 <g class="bar">
                     <rect width="80" height="20" y="49"></rect>
                     <text class="bar-chart-label" x="85" y="60" dy="3"><?php echo _('charge') ?></text>
-                    <text class="bar-chart-label" x="0" y="79" dy="4"><?php echo _('DD HH MM') ?></text>
+                    <text id="indego_mower_runtime_session_charge" class="bar-chart-label" x="0" y="79" dy="4"><?php echo _('DD HH MM') ?></text>
                 </g>
         </div>
     </figure>
@@ -69,14 +69,6 @@
             <tr>
                 <td class="indego_mower_text_align_right"><?php echo _('mow mode') ?></td>
                 <td id="indego_mower_mowmode">-</td>
-            </tr>
-            <tr>
-                <td class="indego_mower_text_align_right"><?php echo _('runtime total') ?></td>
-                <td id="indego_mower_runtimeTotal">-</td>
-            </tr>
-            <tr>
-                <td class="indego_mower_text_align_right"><?php echo _('runtime session') ?></td>
-                <td id="indego_mower_runtimeSession">-</td>
             </tr>
             <tr>
                 <td class="indego_mower_text_align_right"><?php echo _('map update avail') ?></td>
