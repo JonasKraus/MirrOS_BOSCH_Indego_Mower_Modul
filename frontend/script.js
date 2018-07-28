@@ -125,17 +125,17 @@ function reload() {
 
             $('#indego_mower_chart_runtime_total').find('rect')[0].setAttribute('width', 100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.operate);
             $('#indego_mower_chart_runtime_total').find('text')[0].setAttribute('x', 100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.operate + 5);
-            $('#indego_mower_runtime_total_operate').html(data.runtime.total.operate);
+            $('#indego_mower_runtime_total_operate').html(timeConvert(data.runtime.total.operate));
             $('#indego_mower_chart_runtime_total').find('rect')[1].setAttribute('width', 100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.charge);
             $('#indego_mower_chart_runtime_total').find('text')[2].setAttribute('x', 100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.charge + 5);
-            $('#indego_mower_runtime_total_charge').html(data.runtime.total.charge);
+            $('#indego_mower_runtime_total_charge').html(timeConvert(data.runtime.total.charge));
 
             $('#indego_mower_chart_runtime_session').find('rect')[0].setAttribute('width', 100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.operate);
             $('#indego_mower_chart_runtime_session').find('text')[0].setAttribute('x', 100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.operate + 5);
-            $('#indego_mower_runtime_session_operate').html(data.runtime.session.operate);
+            $('#indego_mower_runtime_session_operate').html(timeConvert(data.runtime.session.operate));
             $('#indego_mower_chart_runtime_session').find('rect')[1].setAttribute('width', 100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.charge);
             $('#indego_mower_chart_runtime_session').find('text')[2].setAttribute('x', 100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.charge + 5);
-            $('#indego_mower_runtime_session_charge').html(data.runtime.session.charge);
+            $('#indego_mower_runtime_session_charge').html(timeConvert(data.runtime.session.charge));
 
             $('#indego_mower_mapUpdate').html(data.map_update_available == true ? 'yes' : 'no');
         });
@@ -315,6 +315,30 @@ function reload() {
 
     }
 
+}
+
+
+/**
+ * Converts the time given as minutes to dd hh:mm
+ *
+ * @param time
+ * @returns {string}
+ */
+function timeConvert(minutes) {
+
+    var d = Math.floor(minutes / (60*24));
+    var m = minutes - d * (60*24);
+    var h = ("0" + Math.floor(m / 60)).slice(-2);
+
+    m = ("0" + m % 60).slice(-2)
+
+    if (d == 0) {
+
+        return h + ":" + m;
+    } else {
+
+        return d + " "  + " " + h + ":" + m;
+    }
 }
 
 /**
