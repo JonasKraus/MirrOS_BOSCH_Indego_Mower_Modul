@@ -23,6 +23,13 @@
     </figure>
 
     <figure class="float_left">
+        <div >
+            <img id="indego_mower_state_icon" class="float_leftl" width="50" style="padding-top: 10px; display:block; margin:auto; filter: invert(100%);" />
+            <p style="width: 150px;text-align: center; margin-bottom: 0px; margin-top: 6px;" id="indego_mower_state"></p>
+        </div>
+    </figure>
+
+    <figure class="float_left">
         <figcaption class="fig-caption"><?php echo _('Runtime total') ?></figcaption>
         <div id="indego_mower_chart_runtime_total">
             <svg class="chart" width="160" height="100">
@@ -62,10 +69,6 @@
     <div class="float_left">
         <table class="indego_mower_table">
             <tbody>
-            <tr>
-                <td class="indego_mower_text_align_right"><?php echo _('state') ?></td>
-                <td id="indego_mower_state">-</td>
-            </tr>
             <tr>
                 <td class="indego_mower_text_align_right"><?php echo _('mow mode') ?></td>
                 <td id="indego_mower_mowmode">-</td>

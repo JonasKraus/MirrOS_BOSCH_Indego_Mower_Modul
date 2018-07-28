@@ -3,7 +3,8 @@ var indego_mower_username,
     indego_mower_password,
     indego_mower_options,
     url,
-    codes = createStatusCodes();
+    codes = createStatusCodes(),
+    codeIcons = getStatusCodeIcons();
 
 /**
  * On Ready
@@ -115,6 +116,8 @@ function reload() {
         }).done(function(data) {
 
             $('#indego_mower_state').html('<?php echo _("' + codes[data.state] + '"); ?>');
+            $('#indego_mower_state_icon').hide();
+            $('#indego_mower_state_icon').attr('src', codeIcons[data.state]).fadeIn('slow');
             $('#indego_mower_mowed_chart').html(data.mowed + " %");
 
             $('#indego_mower_chart_mowed').find('circle')[2].setAttribute('stroke-dasharray', data.mowed + ' ' + (100 - data.mowed));
@@ -378,6 +381,47 @@ function createStatusCodes() {
     }
 
 }
+
+/**
+ * creating an array with paths to status code icons
+ *
+ * @returns {{"0": string, "257": string, "258": string, "259": string, "260": string, "261": string, "262": string, "263": string, "513": string, "514": string, "515": string, "516": string, "517": string, "518": string, "519": string, "769": string, "770": string, "771": string, "772": string, "773": string, "774": string, "775": string, "776": string, "1025": string, "1026": string, "1281": string, "1537": string}}
+ */
+function getStatusCodeIcons() {
+
+    const p = "/modules/Indego_Mower/assets/";
+    return {
+        0: p + "status.svg",
+        257: p + "charging.svg",
+        258: p + "docked.svg",
+        259: p + "update.svg",
+        260: p + "docked.svg",
+        261: p + "docked.svg",
+        262: p + "ic_map.svg",
+        263: p + "ic_map.svg",
+        513: p + "mowing.svg",
+        514: p + "relocating.svg",
+        515: p + "ic_map.svg",
+        516: p + "learning_lawn.svg",
+        517: p + "paused.svg",
+        518: p + "mowing.svg",
+        519: p + "idle.svg",
+        769: p + "returning_to_dock.svg",
+        770: p + "returning_to_dock.svg",
+        771: p + "returning_to_dock.svg",
+        772: p + "returning_to_dock.svg",
+        773: p + "returning_to_dock.svg",
+        774: p + "returning_to_dock.svg",
+        775: p + "returning_to_dock.svg",
+        776: p + "returning_to_dock.svg",
+        1025: p + "status.svg",
+        1026: p + "alert.svg",
+        1281: p + "update.svg",
+        1537: p + "alert.svg"
+    }
+
+}
+
 
 /**
  * For testing only
