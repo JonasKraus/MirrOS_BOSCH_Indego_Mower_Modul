@@ -182,6 +182,7 @@ function reload() {
 
         $("#indego_mower_map").find('rect')[0].remove(); // Background
         $("#indego_mower_map").find('path')[0].remove(); // mash
+        $("#indego_mower_map").find('polygon')[0].setAttribute('style','fill:#fff;'); // Fill map white
         $("#indego_mower_map").find('polygon')[1].remove();
     }
 
@@ -330,7 +331,7 @@ function timeConvert(minutes) {
     var m = minutes - d * (60*24);
     var h = ("0" + Math.floor(m / 60)).slice(-2);
 
-    m = ("0" + m % 60).slice(-2)
+    m = ("0" + m % 60).slice(-2);
 
     if (d == 0) {
 
