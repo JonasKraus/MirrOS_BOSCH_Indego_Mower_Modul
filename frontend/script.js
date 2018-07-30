@@ -37,6 +37,9 @@ $(document).ready(function () {
  */
 function reload() {
 
+    // Initially hidden elements
+    $('#indego_mower_map_update_container').hide();
+
     request();
 
     $(document).ready(function() {
@@ -86,6 +89,8 @@ function reload() {
             contextId = data.contextId;
             userId = data.userId;
 
+            requestGenericDeviceData(data);
+            requestNextCutting(data);
             requestState(data);
             requestMap(data);
             requestAlerts(data);
@@ -115,7 +120,13 @@ function reload() {
 
         }).done(function(data) {
 
-            $('#indego_mower_state').html('<?php echo _("' + codes[data.state] + '"); ?>');
+            svg_xPos = data.svg_xPos;
+            svg_yPos = data.svg_yPos;
+
+            console.info(data);
+
+            $('#indego_mower_state').hide();
+            $('#indego_mower_state').html('<?php echo _("' + codes[data.state] + '"); ?>').fadeIn('slow');
             $('#indego_mower_state_icon').hide();
             $('#indego_mower_state_icon').attr('src', codeIcons[data.state]).fadeIn('slow');
             $('#indego_mower_mowed_chart').html(data.mowed + " %");
@@ -138,7 +149,57 @@ function reload() {
             $('#indego_mower_chart_runtime_session').find('text')[2].setAttribute('x', 100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.charge + 5);
             $('#indego_mower_runtime_session_charge').html(timeConvert(data.runtime.session.charge));
 
-            $('#indego_mower_mapUpdate').html(data.map_update_available == true ? 'yes' : 'no');
+            if (data.map_update_available) {
+                $('#indego_mower_mapUpdate').html('<?php echo _(updating); ?>');
+                $('#indego_mower_map_update_container').fadeIn('slow');
+            } else {
+                $('#indego_mower_mapUpdate').html('-');
+                $('#indego_mower_map_update_container').hide();
+            }
+        });
+    }
+
+
+    /**
+     * Requests the current state of the mower
+     *
+     * @param credentials
+     */
+    function requestGenericDeviceData(credentials) {
+
+        $.ajax({
+            type: 'GET',
+            url: url + "alms/" + credentials.alm_sn,
+            headers: {
+                "x-im-context-id":credentials.contextId
+            },
+            contentType: "application/json;charset=UTF-8",
+
+        }).done(function(data) {
+
+            console.info(data);
+        });
+    }
+
+
+    /**
+     * Requests the current state of the mower
+     *
+     * @param credentials
+     */
+    function requestNextCutting(credentials) {
+
+        $.ajax({
+            type: 'GET',
+            url: url + "alms/" + credentials.alm_sn + "/predictive/nextcutting",
+            headers: {
+                "x-im-context-id":credentials.contextId
+            },
+            contentType: "application/json;charset=UTF-8",
+
+        }).done(function(data) {
+
+            console.info(data);
         });
     }
 
@@ -160,19 +221,107 @@ function reload() {
             //contentType: "application/svg+xml; charset=utf-8",
             dataType: "text",
 
-
-
         }).done(function(map) {
 
+            $('#indego_mower_map').hide();
             $('#indego_mower_map').append(map);
 
             var svg = $("#indego_mower_map").find('svg')[0];
 
-
             styleMap();
+            addPositionToMap(svg);
             resizeSvg(svg, 150);
+            $('#indego_mower_map').fadeIn('slow');
 
+        }).error(function (error) {
+
+            console.info(error);
         });
+    }
+
+    /**
+     * Adds a circle as position of the mower to the map
+     *
+     * @param svg
+     */
+    function addPositionToMap(svg) {
+        var svgNS = "http://www.w3.org/2000/svg";
+        var pos = document.createElementNS(svgNS,"circle");
+        pos.setAttributeNS(null,"id","mycircle");
+        pos.setAttributeNS(null,"cx",svg_xPos);
+        pos.setAttributeNS(null,"cy",1400-svg_yPos);
+        pos.setAttributeNS(null,"r",20);
+        pos.setAttributeNS(null,"fill","#000");
+        pos.setAttributeNS(null,"stroke","black");
+        pos.setAttributeNS(null,"stroke-width","40");
+
+        var circle1 = document.createElementNS(svgNS,"circle");
+        circle1.setAttributeNS(null,"id","mycircle");
+        circle1.setAttributeNS(null,"cx",svg_xPos);
+        circle1.setAttributeNS(null,"cy",1400-svg_yPos);
+        circle1.setAttributeNS(null,"r",50);
+        circle1.setAttributeNS(null,"fill","#000");
+        circle1.setAttributeNS(null,"stroke","black");
+        circle1.setAttributeNS(null,"stroke-width","40");
+        var scale = document.createElementNS(svgNS,"animate");
+        scale.setAttribute('attributeType', 'SVG');
+        scale.setAttribute('attributeName', 'r');
+        scale.setAttribute('begin', '0s');
+        scale.setAttribute('dur', '3s');
+        scale.setAttribute('repeatCount', 'indefinite');
+        scale.setAttribute('from', '2%');
+        scale.setAttribute('to', '20%');
+        circle1.appendChild(scale);
+        var fade = document.createElementNS(svgNS,"animate");
+        fade.setAttribute('attributeType', 'CSS');
+        fade.setAttribute('attributeName', 'opacity');
+        fade.setAttribute('begin', '0s');
+        fade.setAttribute('dur', '3s');
+        fade.setAttribute('repeatCount', 'indefinite');
+        fade.setAttribute('from', '.6');
+        fade.setAttribute('to', '0');
+        circle1.appendChild(fade);
+        /*
+        var stroke = document.createElementNS(svgNS,"animate");
+        stroke.setAttribute('attributeType', 'CSS');
+        stroke.setAttribute('attributeName', 'stroke-width');
+        stroke.setAttribute('begin', '0s');
+        stroke.setAttribute('dur', '1.5s');
+        stroke.setAttribute('repeatCount', 'indefinite');
+        stroke.setAttribute('from', '0%');
+        stroke.setAttribute('to', '3%');
+        myCircle.appendChild(stroke);
+        */
+
+        var circle2 = document.createElementNS(svgNS,"circle");
+        circle2.setAttributeNS(null,"id","mycircle");
+        circle2.setAttributeNS(null,"cx",svg_xPos);
+        circle2.setAttributeNS(null,"cy",1400-svg_yPos);
+        circle2.setAttributeNS(null,"r",50);
+        circle2.setAttributeNS(null,"fill","#000");
+        circle2.setAttributeNS(null,"stroke","black");
+        circle2.setAttributeNS(null,"stroke-width","40");
+        var scale2 = document.createElementNS(svgNS,"animate");
+        scale2.setAttribute('attributeType', 'SVG');
+        scale2.setAttribute('attributeName', 'r');
+        scale2.setAttribute('begin', '1s');
+        scale2.setAttribute('dur', '3s');
+        scale2.setAttribute('repeatCount', 'indefinite');
+        scale2.setAttribute('from', '2%');
+        scale2.setAttribute('to', '20%');
+        circle2.appendChild(scale2);
+        var fade2 = document.createElementNS(svgNS,"animate");
+        fade2.setAttribute('attributeType', 'CSS');
+        fade2.setAttribute('attributeName', 'opacity');
+        fade2.setAttribute('begin', '1s');
+        fade2.setAttribute('dur', '3s');
+        fade2.setAttribute('repeatCount', 'indefinite');
+        fade2.setAttribute('from', '.6');
+        fade2.setAttribute('to', '0');
+        circle2.appendChild(fade2);
+        svg.appendChild(circle1);
+        svg.appendChild(circle2);
+        svg.appendChild(pos);
     }
 
 
@@ -225,7 +374,7 @@ function reload() {
      */
     function createAlertsView(alerts) {
 
-        alerts = createTestAlerts(); // TODO
+        //alerts = createTestAlerts(); // TODO
 
         // Removing old rows from table
         $('tr.indego_mower_tr').remove();
@@ -295,6 +444,7 @@ function reload() {
             console.info("***** deauthenticated *****");
         });
     }
+
 
     function saveMap(map) {
         $.ajax({

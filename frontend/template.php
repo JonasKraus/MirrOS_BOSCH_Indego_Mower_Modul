@@ -3,7 +3,7 @@
 <div>
 
     <figure class="float_left">
-        <div id="indego_mower_chart_mowed">
+        <div id="indego_mower_chart_mowed" style="margin-left: -13px; margin-right: -20px;">
             <svg width="150" height="150" viewBox="0 0 42 42" class="donut circle-chart">
                 <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="#000"></circle>
                 <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#333" stroke-width="0.5"></circle>
@@ -23,7 +23,7 @@
     </figure>
 
     <figure class="float_left">
-        <div >
+        <div id="indego_mower_state_container">
             <img id="indego_mower_state_icon" class="float_leftl" width="50" style="padding-top: 10px; display:block; margin:auto; filter: invert(100%);" />
             <p style="width: 150px;text-align: center; margin-bottom: 0px; margin-top: 6px;" id="indego_mower_state"></p>
         </div>
@@ -61,9 +61,14 @@
                 </g>
         </div>
     </figure>
-
     <figure class="float_left">
-        <div id="indego_mower_map"></div>
+        <div id="indego_mower_map">
+            <div id="indego_mower_map_update_container">
+                <img id="indego_mower_ic_map" src="/modules/Indego_Mower/assets/ic_map.svg" width="50" style="padding-top: 10px; display:block; margin:auto; filter: invert(100%);">
+                <p style="text-align: center;  margin-bottom: 0px; margin-top: 6px;" id="indego_mower_mapUpdate"></p>
+            </div>
+
+        </div>
     </figure>
 
     <div class="float_left">
@@ -72,10 +77,6 @@
             <tr>
                 <td class="indego_mower_text_align_right"><?php echo _('mow mode') ?></td>
                 <td id="indego_mower_mowmode">-</td>
-            </tr>
-            <tr>
-                <td class="indego_mower_text_align_right"><?php echo _('map update avail') ?></td>
-                <td id="indego_mower_mapUpdate">-</td>
             </tr>
             </tbody>
         </table>
