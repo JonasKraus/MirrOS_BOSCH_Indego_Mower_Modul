@@ -82,7 +82,7 @@
         </table>
     </div>
     <div class="float_left">
-        <table id="indego_mower_table_alerts">
+        <table style="table-layout: auto" id="indego_mower_table_alerts">
         </table>
     </div>
 

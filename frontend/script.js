@@ -3,6 +3,7 @@ var indego_mower_username,
     indego_mower_password,
     indego_mower_options,
     url,
+
     codes = createStatusCodes(),
     codeIcons = getStatusCodeIcons();
 
@@ -224,7 +225,8 @@ function reload() {
         }).done(function(map) {
 
             $('#indego_mower_map').hide();
-            $('#indego_mower_map').append(map);
+            $('#indego_mower_map_update_container').hide();
+            $('#indego_mower_map').append(map).fadeIn('slow');
 
             var svg = $("#indego_mower_map").find('svg')[0];
 
@@ -376,6 +378,8 @@ function reload() {
 
         //alerts = createTestAlerts(); // TODO
 
+        console.info(alerts);
+
         // Removing old rows from table
         $('tr.indego_mower_tr').remove();
 
@@ -388,10 +392,12 @@ function reload() {
             var trMessage = $('<tr class="indego_mower_tr"/>').hide();
 
             if (alerts[i] !== undefined) {
+                var d = new Date(alerts[i].date);
 
                 trHeadline.append("<td width='24'><img src='/modules/Indego_Mower/assets/alert.svg'/></td>");
+                trHeadline.append("<td width='40'>" + d.getHours() + ":" + d.getMinutes() + "</td>");
                 trHeadline.append("<td>" + alerts[i].headline + "</td>");
-                trMessage.append("<td colspan='2'>" + alerts[i].message + "</td>");
+                trMessage.append("<td colspan='3'>" + alerts[i].message + "</td>");
             }
 
             // Appending the row to the table
@@ -570,6 +576,33 @@ function getStatusCodeIcons() {
         1537: p + "alert.svg"
     }
 
+}
+
+function formatTime(dateTime) {
+
+    var timeformat = "<?php echo getConfigValue('timeformat'); ?>";
+    var hoursFormat = timeformat == 12 ? 'hh' : 'HH';
+
+    var time = dateTime.format(hoursFormat + ':mm');
+    var date = dateTime.format('dd, L');
+
+    /*
+    if(isFullwidth) {
+        $('.infomodule__time').append('<span class="seconds">' + dateTime.format('ss') + '</span>');
+        window.setTimeout(function() {
+            updateTime();
+        }, 1000 - dateTime.milliseconds());
+    } else {
+        window.setTimeout(function() {
+            updateTime();
+        }, (61 - dateTime.seconds()) * 1000);
+    }
+    */
+
+    return {
+        time: time,
+        date: date
+    }
 }
 
 
