@@ -136,18 +136,22 @@ function reload() {
 
             $('#indego_mower_mowmode').html(data.mowmode);
 
-            $('#indego_mower_chart_runtime_total').find('rect')[0].setAttribute('width', 100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.operate);
-            $('#indego_mower_chart_runtime_total').find('text')[0].setAttribute('x', 100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.operate + 5);
+            $('#indego_mower_chart_runtime_total').find('rect')[0].setAttribute('width', Math.round(100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.operate));
+            $('#indego_mower_chart_runtime_total').find('rect')[0].appendChild(addScaleAnimation(0, Math.round(100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.operate)));
+            $('#indego_mower_chart_runtime_total').find('text')[0].setAttribute('x', Math.round(100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.operate + 5));
             $('#indego_mower_runtime_total_operate').html(timeConvert(data.runtime.total.operate));
-            $('#indego_mower_chart_runtime_total').find('rect')[1].setAttribute('width', 100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.charge);
-            $('#indego_mower_chart_runtime_total').find('text')[2].setAttribute('x', 100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.charge + 5);
+            $('#indego_mower_chart_runtime_total').find('rect')[1].setAttribute('width', Math.round(100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.charge));
+            $('#indego_mower_chart_runtime_total').find('rect')[1].appendChild(addScaleAnimation(0, Math.round(100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.charge)));
+            $('#indego_mower_chart_runtime_total').find('text')[2].setAttribute('x', Math.round(100 / (data.runtime.total.operate + data.runtime.total.charge) * data.runtime.total.charge + 5));
             $('#indego_mower_runtime_total_charge').html(timeConvert(data.runtime.total.charge));
 
-            $('#indego_mower_chart_runtime_session').find('rect')[0].setAttribute('width', 100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.operate);
-            $('#indego_mower_chart_runtime_session').find('text')[0].setAttribute('x', 100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.operate + 5);
+            $('#indego_mower_chart_runtime_session').find('rect')[0].setAttribute('width', Math.round(100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.operate));
+            $('#indego_mower_chart_runtime_session').find('rect')[0].appendChild(addScaleAnimation(0, Math.round(100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.operate)));
+            $('#indego_mower_chart_runtime_session').find('text')[0].setAttribute('x', Math.round(100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.operate + 5));
             $('#indego_mower_runtime_session_operate').html(timeConvert(data.runtime.session.operate));
-            $('#indego_mower_chart_runtime_session').find('rect')[1].setAttribute('width', 100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.charge);
-            $('#indego_mower_chart_runtime_session').find('text')[2].setAttribute('x', 100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.charge + 5);
+            $('#indego_mower_chart_runtime_session').find('rect')[1].setAttribute('width', Math.round(100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.charge));
+            $('#indego_mower_chart_runtime_session').find('rect')[1].appendChild(addScaleAnimation(0, Math.round(100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.charge)));
+            $('#indego_mower_chart_runtime_session').find('text')[2].setAttribute('x', Math.round(100 / (data.runtime.session.operate + data.runtime.session.charge) * data.runtime.session.charge + 5));
             $('#indego_mower_runtime_session_charge').html(timeConvert(data.runtime.session.charge));
 
             if (data.map_update_available) {
@@ -158,6 +162,22 @@ function reload() {
                 $('#indego_mower_map_update_container').hide();
             }
         });
+    }
+
+
+    function addScaleAnimation(from, to) {
+
+        var svgNS = "http://www.w3.org/2000/svg";
+        var scale = document.createElementNS(svgNS,"animate");
+        scale.setAttribute('attributeType', 'SVG');
+        scale.setAttribute('attributeName', 'width');
+        scale.setAttribute('begin', '0s');
+        scale.setAttribute('dur', '1s');
+        scale.setAttribute('repeatCount', 1);
+        scale.setAttribute('from', '0%');
+        scale.setAttribute('to', to );
+
+        return scale;
     }
 
 
@@ -177,7 +197,6 @@ function reload() {
             contentType: "application/json;charset=UTF-8",
 
         }).done(function(data) {
-
 
             $('#indego_mower_alm_mode').html(data.alm_mode);
             console.info(data);
