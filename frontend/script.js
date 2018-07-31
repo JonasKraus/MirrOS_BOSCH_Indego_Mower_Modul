@@ -578,33 +578,6 @@ function getStatusCodeIcons() {
 
 }
 
-function formatTime(dateTime) {
-
-    var timeformat = "<?php echo getConfigValue('timeformat'); ?>";
-    var hoursFormat = timeformat == 12 ? 'hh' : 'HH';
-
-    var time = dateTime.format(hoursFormat + ':mm');
-    var date = dateTime.format('dd, L');
-
-    /*
-    if(isFullwidth) {
-        $('.infomodule__time').append('<span class="seconds">' + dateTime.format('ss') + '</span>');
-        window.setTimeout(function() {
-            updateTime();
-        }, 1000 - dateTime.milliseconds());
-    } else {
-        window.setTimeout(function() {
-            updateTime();
-        }, (61 - dateTime.seconds()) * 1000);
-    }
-    */
-
-    return {
-        time: time,
-        date: date
-    }
-}
-
 
 /**
  * For testing only
