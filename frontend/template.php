@@ -74,8 +74,16 @@
         <table class="indego_mower_table">
             <tbody>
             <tr>
-                <td class="indego_mower_text_align_right"><?php echo _('mow mode') ?></td>
+                <td class="indego_mower_text_align_right"><?php echo _('mow mode:') ?></td>
                 <td id="indego_mower_mowmode">-</td>
+            </tr>
+            <tr>
+                <td class="indego_mower_text_align_right"><?php echo _('alm mode:') ?></td>
+                <td id="indego_mower_alm_mode">-</td>
+            </tr>
+            <tr>
+                <td class="indego_mower_text_align_right"><?php echo _('mow next:') ?></td>
+                <td id="indego_mower_mow_next">-</td>
             </tr>
             </tbody>
         </table>

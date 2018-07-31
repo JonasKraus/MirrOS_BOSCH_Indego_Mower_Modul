@@ -178,6 +178,8 @@ function reload() {
 
         }).done(function(data) {
 
+
+            $('#indego_mower_alm_mode').html(data.alm_mode);
             console.info(data);
         });
     }
@@ -200,6 +202,7 @@ function reload() {
 
         }).done(function(data) {
 
+            $('#indego_mower_mow_next').html(data.mow_next);
             console.info(data);
         });
     }
