@@ -62,12 +62,11 @@
         </div>
     </figure>
     <figure class="float_left">
-        <div id="indego_mower_map">
-            <div id="indego_mower_map_update_container">
+        <div id="indego_mower_map" style="margin-top: -6px; margin-left: 25px">
+            <div id="indego_mower_map_update_container" style="margin-top: 6px;">
                 <img id="indego_mower_ic_map" src="/modules/Indego_Mower/assets/ic_map.svg" width="50" style="padding-top: 10px; display:block; margin:auto; filter: invert(100%);">
                 <p style="text-align: center;  margin-bottom: 0px; margin-top: 6px;" id="indego_mower_mapUpdate"></p>
             </div>
-
         </div>
     </figure>
 

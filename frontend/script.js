@@ -154,7 +154,7 @@ function reload() {
                 $('#indego_mower_mapUpdate').html('<?php echo _(updating); ?>');
                 $('#indego_mower_map_update_container').fadeIn('slow');
             } else {
-                $('#indego_mower_mapUpdate').html('-');
+                $('#indego_mower_mapUpdate').html('');
                 $('#indego_mower_map_update_container').hide();
             }
         });
@@ -356,13 +356,14 @@ function reload() {
         var pw;
         var ph;
 
-        if (w > h){
+        if (w < h){
             pw = size;
             ph = pw * h/w;
         } else {
             ph = size;
             pw = ph * w/h;
         }
+
         svg.setAttribute('width', ph);
         svg.setAttribute('height', pw);
         svg.setAttribute('viewBox', '0 0 '+w+' '+h);
@@ -383,6 +384,7 @@ function reload() {
         // Removing old rows from table
         $('tr.indego_mower_tr').remove();
 
+        // Only displays the last alert
         var numOfDisplayedAlerts = 1; // TODO
 
         for(var i = 0; i < numOfDisplayedAlerts; i++) {
